@@ -1,22 +1,17 @@
 const {admin} = require('../../../lib/loaders')
+const {MONGO_DB_NAME} = require('../../../lib/common/config')
 const User = require('../../../lib/models/user')
 
 const signUp = async (req, res) => {
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.email || !req.body.password) {
         res.json({success: false, msg: 'Please pass username and password.'});
     } else {
-        const newUserData = {
-            email: req.body.email,
-            password: req.body.password,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
-        }
-        // save the user
+        // update the user
         try {
-            await User.save(newUserData)
-            res.json({success: true, msg: 'Successful created new user.'});
+            await User.signUp(admin.dbClient, MONGO_DB_NAME, req.body.email, req.body.password)
+            res.json({success: true, msg: 'Successful sign-up new user.'});
         } catch (err) {
-            return res.json({success: false, msg: 'Username already exists.'});
+            return res.json({success: false, msg: 'The user is not registered, contact the administrator.'});
         }
     }
 }

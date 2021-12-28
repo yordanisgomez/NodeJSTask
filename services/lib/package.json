@@ -9,6 +9,7 @@
   "author": "Yordanis Gomez Finale",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "mongodb": "^4.2.2"
   }

@@ -12,8 +12,8 @@ const COLLECTIONS = Object.freeze({
 })
 
 const USER_ROLE = Object.freeze({
-    ADMIN: 'GROUP_ROLE_ADMIN',
-    USER: 'GROUP_ROLE_USER'
+    ADMIN: 'ROLE_ADMIN',
+    USER: 'ROLE_USER'
 })
 
 module.exports = {DEBUG_COLORS, COLLECTIONS, USER_ROLE}
