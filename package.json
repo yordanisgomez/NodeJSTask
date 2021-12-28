@@ -1,0 +1,24 @@
+{
+  "name": "nodejstask",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node services/server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yordanisgomez/NodeJSTask.git"
+  },
+  "author": "Yordanis Gomez Finale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yordanisgomez/NodeJSTask/issues"
+  },
+  "homepage": "https://github.com/yordanisgomez/NodeJSTask#readme",
+  "devDependencies": {
+    "@shelf/jest-mongodb": "^2.1.1",
+    "jest": "^27.4.5"
+  }
+}
