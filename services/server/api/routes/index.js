@@ -8,7 +8,8 @@ const bodyParser = require('body-parser')
 const Router = express.Router()
 
 // create application/x-www-form-urlencoded parser
-const urlencodedParser = bodyParser.urlencoded({extended: false})
+const urlencodedParser = bodyParser.urlencoded({extended: false})// create application/json parser
+const jsonParser = bodyParser.json()
 
 /*
 * admin routes
@@ -32,11 +33,11 @@ Router.route('/listUsers')
 /*
 * user routes
 * */
-Router.route('/signup')
+Router.route('/auth/signup')
     .post(urlencodedParser, userController.signUp)
 
-Router.route('/login')
-    .post(urlencodedParser, userController.login)
+Router.route('/auth/signin')
+    .post(jsonParser, userController.login)
 
 Router.route('/addBook')
     .post(authorizeRequest, passport.authenticate('jwt', { session: false}),
