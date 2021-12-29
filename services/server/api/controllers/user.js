@@ -26,16 +26,21 @@ const login = async (req, res) => {
             console.log(req.body.email, " - ", req.body.password)
             const user = await User.findOne(admin.dbClient, MONGO_DB_NAME, {_id: req.body.email})
             if(user) {
-                // check if password matches
-                const isMatch = await bcrypt.compare(req.body.password, user.password)
-                if(isMatch) {
-                    // if user is found and password is right create a token
-                    const token = jwt.sign(user, JWT_SECRET);
-                    console.log("token: ", token)
-                    // return the information including token as JSON
-                    res.json({success: true, token: 'JWT ' + token});
+                // check if the user is signed up:
+                if(user.signedUp) {
+                    // check if password matches
+                    const isMatch = await bcrypt.compare(req.body.password, user.password)
+                    if(isMatch) {
+                        // if user is found and password is right create a token
+                        const token = jwt.sign(user, JWT_SECRET);
+                        console.log("token: ", token)
+                        // return the information including token as JSON
+                        res.json({success: true, token: 'JWT ' + token});
+                    } else {
+                        res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})
+                    }
                 } else {
-                    res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})
+                    res.status(401).send({success: false, msg: 'Authentication failed. You need to sign up first.'})
                 }
             } else {
                 res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})

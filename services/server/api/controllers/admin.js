@@ -5,7 +5,7 @@ const User = require('../../../lib/models/user')
 
 const createUser = async (req, res) => {
     if (!req.body.email || !req.body.firstName || !req.body.lastName) {
-        res.json({success: false, msg: 'Please pass username, firstName and lastName.'});
+        res.json({success: false, msg: 'Please pass email, firstName and lastName.'});
     } else {
         const newUserData = {
             email: req.body.email,
@@ -24,4 +24,18 @@ const createUser = async (req, res) => {
     }
 }
 
-module.exports = {createUser}
+const deleteUser = async (req, res) => {
+    if (!req.params.email) {
+        res.json({success: false, msg: 'Please pass email.'});
+    } else {
+        // delete the user
+        try {
+            await User.deleteOne(admin.dbClient, MONGO_DB_NAME, req.params.email)
+            res.json({success: true, msg: 'Successful deleted the user.'});
+        } catch (err) {
+            return res.json({success: false, msg: 'Unable to delete the user.'});
+        }
+    }
+}
+
+module.exports = {createUser, deleteUser}

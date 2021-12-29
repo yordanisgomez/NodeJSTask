@@ -22,9 +22,14 @@ const signUp = async (dbClient, dbName, email, password) => {
     return collection.updateOne({_id: email}, {$set: data})
 }
 
+const deleteOne = async (dbClient, dbName, email) => {
+    const collection = _collection(dbClient, dbName)
+    return collection.deleteOne({_id: email})
+}
+
 const _collection = (dbClient, dbName) => {
     const db = dbClient.db(dbName)
     return db.collection(COLLECTIONS.USER)
 }
 
-module.exports = {findOne, save, signUp}
+module.exports = {findOne, save, signUp, deleteOne}

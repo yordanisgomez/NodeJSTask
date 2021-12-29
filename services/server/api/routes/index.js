@@ -17,6 +17,14 @@ Router.route('/createUser')
     .post(authorizeRequest, passport.authenticate('jwt', { session: false}),
         authorizeAdmin, urlencodedParser, adminController.createUser)
 
+Router.route('/deleteUser/:email')
+    .delete(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        authorizeAdmin, adminController.deleteUser)
+
+Router.route('/updateUser')
+    .patch(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        authorizeAdmin, urlencodedParser, adminController.createUser)
+
 /*
 * user routes
 * */
