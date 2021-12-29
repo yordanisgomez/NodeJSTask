@@ -1,4 +1,3 @@
-const passport = require('passport')
 
 const authorizeRequest = (req, res, next) => {
     const authorizationHeader = req.headers.authorization
@@ -6,6 +5,7 @@ const authorizeRequest = (req, res, next) => {
         const token = authorizationHeader.split(' ')[1]
         if(token) {
             // using the passport auth middleware
+            console.log("token: ", token)
             next()
         } else {
             res.status(401).json('UNAUTHORIZED: The token is missing.')

@@ -5,12 +5,13 @@ const User = require('../../lib/models/user')
 const passport = require('passport')
 
 const init = (dbClient) => {
-    const opts = {}
-    opts.jwtFromRequest = ExtractJwt.fromHeader()
-    opts.secretOrKey = config.JWT_SECRET
+    const opts = {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+        secretOrKey: config.JWT_SECRET
+    }
     passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
-        const user = await User.findOne(dbClient, config.MONGO_DB_NAME, {id: jwt_payload.id})
-        if (user) {
+        const user = await User.findOne(dbClient, config.MONGO_DB_NAME, {_id: jwt_payload._id})
+        if (user && user.signedUp) {
             done(null, user)
         } else {
             done(null, false)

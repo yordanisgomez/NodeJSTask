@@ -10,12 +10,11 @@ const {DEBUG_COLORS} = require('../../lib/common/constants')
 * @param app Express app instance
 * */
 const init = async () => {
-    await libLoader.init()
-    const {admin} = libLoader
+    const dbClient = await libLoader.init()
     process.on('unhandledRejection', error => {
         console.log(DEBUG_COLORS.RED, "unhandledRejection " + error.message)
     })
-    const passport = passportLoader.init(admin.dbClient)
+    const passport = passportLoader.init(dbClient)
     appLoader.init(passport)
 }
 
