@@ -40,9 +40,17 @@ const listByAuthors = async (dbClient, dbName, page, limit) => {
     const skip = page*limit
     const aggregator = collection.aggregate([
         {
-            $bucketAuto: {
-                groupBy: "$author._id",
-                buckets: limit,
+            $group: {
+                _id: "$author._id",
+                author: {$first: "$author"},
+                books: {
+                    $push: {
+                        title: "$title",
+                        isbn: "$isbn",
+                        editorial: "$editorial",
+                        year: "$year"
+                    }
+                }
             }
         },
         {
