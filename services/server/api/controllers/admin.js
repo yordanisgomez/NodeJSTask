@@ -38,4 +38,48 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = {createUser, deleteUser}
+const updateUser = async (req, res) => {
+    if (!req.body.email) {
+        res.json({success: false, msg: 'Please pass email.'});
+    } else {
+        try {
+            const data = {}
+            if(req.body.firstName) {
+                data.firstName = req.body.firstName
+            }
+            if(req.body.lastName) {
+                data.lastName = req.body.lastName
+            }
+            if(Object.keys(data).length > 0) {
+                const {modifiedCount} = await User.updateOne(admin.dbClient, MONGO_DB_NAME, req.body.email, data)
+                if(modifiedCount == 1) {
+                    res.json({success: true, msg: 'Successful updated the user.'});
+                } else {
+                    return res.json({success: false, msg: 'Unable to update the user, user not found.'});
+                }
+            } else {
+                return res.json({success: false, msg: 'Unable to update the user, data to update is missing (firstName, lastName or both).'});
+            }
+        } catch (err) {
+            return res.json({success: false, msg: 'Unable to update the user.'});
+        }
+    }
+}
+
+/*
+* @param req.body.page int 0 based page, optional, default 0
+* @param req.body.limit int the amount of users per page, optional, default 30
+* */
+const listUsers = async (req, res) => {
+    const page = req.body.page ? parseInt(req.body.page) : 0
+    const limit = req.body.limit ? parseInt(req.body.limit) : 30
+
+    try {
+        const users = await User.list(admin.dbClient, MONGO_DB_NAME, page, limit)
+        res.json({success: true, msg: 'Successful listing users.', data: users});
+    } catch (err) {
+        return res.json({success: false, msg: 'Unable to list users.'});
+    }
+}
+
+module.exports = {createUser, deleteUser, updateUser, listUsers}

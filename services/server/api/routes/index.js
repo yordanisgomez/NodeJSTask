@@ -23,7 +23,11 @@ Router.route('/deleteUser/:email')
 
 Router.route('/updateUser')
     .patch(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        authorizeAdmin, urlencodedParser, adminController.createUser)
+        authorizeAdmin, urlencodedParser, adminController.updateUser)
+
+Router.route('/listUsers')
+    .get(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        authorizeAdmin, urlencodedParser, adminController.listUsers)
 
 /*
 * user routes
@@ -34,5 +38,24 @@ Router.route('/signup')
 Router.route('/login')
     .post(urlencodedParser, userController.login)
 
+Router.route('/addBook')
+    .post(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        urlencodedParser, userController.addBook)
+
+Router.route('/deleteBook/:bookId')
+    .delete(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        userController.deleteBook)
+
+Router.route('/updateBook')
+    .patch(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        urlencodedParser, userController.updateBook)
+
+Router.route('/listMyBooks')
+    .get(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        urlencodedParser, userController.listMyBooks)
+
+Router.route('/listBooksByAuthors')
+    .get(authorizeRequest, passport.authenticate('jwt', { session: false}),
+        urlencodedParser, userController.listBooksByAuthors)
 
 module.exports = Router
