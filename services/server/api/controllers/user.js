@@ -26,7 +26,6 @@ const login = async (req, res) => {
         res.json({success: false, msg: 'Please pass username and password.'});
     } else {
         try {
-            console.log(req.body.email, " - ", req.body.password)
             const user = await User.findOne(admin.dbClient, MONGO_DB_NAME, {_id: req.body.email})
             if(user) {
                 // check if the user is signed up:
@@ -36,7 +35,6 @@ const login = async (req, res) => {
                     if(isMatch) {
                         // if user is found and password is right create a token
                         const token = jwt.sign(user, JWT_SECRET);
-                        console.log("token: ", token)
                         // return the information including token as JSON
                         delete user.password
                         res.json({success: true, accessToken: 'JWT ' + token, ...user});
