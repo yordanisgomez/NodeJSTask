@@ -10,6 +10,10 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardAdmin from "./components/BoardAdmin";
+import AddNewBook from "./components/formPages/AddNewBook";
+import EditBook from "./components/formPages/EditBook";
+import EditUser from "./components/formPages/EditUser";
+import AddNewUser from "./components/formPages/AddNewUser";
 
 const App = () => {
     const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -20,7 +24,7 @@ const App = () => {
 
         if (user) {
             setCurrentUser(user);
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+            setShowAdminBoard(user.role=="ROLE_ADMIN");
         }
     }, []);
 
@@ -57,7 +61,7 @@ const App = () => {
                     <div className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link to={"/profile"} className="nav-link">
-                                {currentUser.username}
+                                {`${currentUser.firstName} ${currentUser.lastName}`}
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -90,6 +94,11 @@ const App = () => {
                     <Route exact path="/profile" element={<Profile/>} />
                     <Route path="/user" element={<BoardUser/>} />
                     <Route path="/admin" element={<BoardAdmin/>} />
+
+                    <Route path="/addNewBook" element={<AddNewBook/>} />
+                    <Route path="/editBook" element={<EditBook/>} />
+                    <Route path="/addNewUser" element={<AddNewUser/>} />
+                    <Route path="/editUser" element={<EditUser/>} />
                 </Routes>
             </div>
         </div>

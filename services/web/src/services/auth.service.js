@@ -14,7 +14,7 @@ const login = async (email, password) => {
         email,
         password
     })
-console.log(response)
+
     if(response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data))
     }

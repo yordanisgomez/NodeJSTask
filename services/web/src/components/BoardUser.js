@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import UserService from "../services/user.service";
+import AuthorList from "./booksByAuthors/authorList";
 
 const BoardUser = () => {
     const [content, setContent] = useState("");
@@ -8,7 +9,7 @@ const BoardUser = () => {
     useEffect(() => {
         UserService.getUserBoard().then(
             (response) => {
-                setContent(response.data);
+                setContent(response.data.data);
             },
             (error) => {
                 const _content =
@@ -26,7 +27,15 @@ const BoardUser = () => {
     return (
         <div className="container">
             <header className="jumbotron">
-                <h3>{content}</h3>
+                <h3>{"Books by authors"}</h3>
+                {
+                    Array.isArray(content) ? (
+                        <AuthorList authorList={content}/>
+                    ) : (
+                        content
+                    )
+                }
+
             </header>
         </div>
     );

@@ -16,7 +16,7 @@ const jsonParser = bodyParser.json()
 * */
 Router.route('/createUser')
     .post(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        authorizeAdmin, urlencodedParser, adminController.createUser)
+        authorizeAdmin, jsonParser, adminController.createUser)
 
 Router.route('/deleteUser/:email')
     .delete(authorizeRequest, passport.authenticate('jwt', { session: false}),
@@ -24,24 +24,24 @@ Router.route('/deleteUser/:email')
 
 Router.route('/updateUser')
     .patch(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        authorizeAdmin, urlencodedParser, adminController.updateUser)
+        authorizeAdmin, jsonParser, adminController.updateUser)
 
 Router.route('/listUsers')
     .get(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        authorizeAdmin, urlencodedParser, adminController.listUsers)
+        authorizeAdmin, jsonParser, adminController.listUsers)
 
 /*
 * user routes
 * */
 Router.route('/auth/signup')
-    .post(urlencodedParser, userController.signUp)
+    .post(jsonParser, userController.signUp)
 
 Router.route('/auth/signin')
     .post(jsonParser, userController.login)
 
 Router.route('/addBook')
     .post(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        urlencodedParser, userController.addBook)
+        jsonParser, userController.addBook)
 
 Router.route('/deleteBook/:bookId')
     .delete(authorizeRequest, passport.authenticate('jwt', { session: false}),
@@ -49,14 +49,14 @@ Router.route('/deleteBook/:bookId')
 
 Router.route('/updateBook')
     .patch(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        urlencodedParser, userController.updateBook)
+        jsonParser, userController.updateBook)
 
 Router.route('/listMyBooks')
     .get(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        urlencodedParser, userController.listMyBooks)
+        jsonParser, userController.listMyBooks)
 
 Router.route('/listBooksByAuthors')
     .get(authorizeRequest, passport.authenticate('jwt', { session: false}),
-        urlencodedParser, userController.listBooksByAuthors)
+        jsonParser, userController.listBooksByAuthors)
 
 module.exports = Router

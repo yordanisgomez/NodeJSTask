@@ -38,7 +38,8 @@ const login = async (req, res) => {
                         const token = jwt.sign(user, JWT_SECRET);
                         console.log("token: ", token)
                         // return the information including token as JSON
-                        res.json({success: true, token: 'JWT ' + token});
+                        delete user.password
+                        res.json({success: true, accessToken: 'JWT ' + token, ...user});
                     } else {
                         res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})
                     }
