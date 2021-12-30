@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import {Routes, Route, Link, useNavigate} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -35,9 +35,6 @@ const App = () => {
     return (
         <div>
             <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <Link to={"/"} className="navbar-brand">
-                    Library
-                </Link>
                 <div className="navbar-nav mr-auto">
 
                     {showAdminBoard && (
@@ -48,7 +45,7 @@ const App = () => {
                         </li>
                     )}
 
-                    {currentUser && (
+                    {(currentUser && !showAdminBoard) && (
                         <li className="nav-item">
                             <Link to={"/user"} className="nav-link">
                                 User
@@ -89,9 +86,9 @@ const App = () => {
 
             <div className="container mt-3">
                 <Routes>
-                    <Route exact path="/login" element={<Login/>} />
-                    <Route exact path="/register" element={<Register/>} />
-                    <Route exact path="/profile" element={<Profile/>} />
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/profile" element={<Profile/>} />
                     <Route path="/user" element={<BoardUser/>} />
                     <Route path="/admin" element={<BoardAdmin/>} />
 
