@@ -45,6 +45,7 @@ const listByAuthors = async (dbClient, dbName, page, limit) => {
                 author: {$first: "$author"},
                 books: {
                     $push: {
+                        _id: "$_id",
                         title: "$title",
                         isbn: "$isbn",
                         editorial: "$editorial",

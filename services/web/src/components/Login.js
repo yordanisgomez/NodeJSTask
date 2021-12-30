@@ -28,7 +28,7 @@ const validEmail = (value) => {
     }
 };
 
-const Login = (props) => {
+const Login = () => {
     const form = useRef();
     const checkBtn = useRef();
     const navigate = useNavigate();
@@ -58,22 +58,25 @@ const Login = (props) => {
 
         if (checkBtn.current.context._errors.length === 0) {
             AuthService.login(email, password).then(
-                () => {
-                    navigate("/profile");
+                (user) => {
+                    if(user.role == "ROLE_ADMIN") {
+                        navigate("/admin");
+                    } else {
+                        navigate("/user");
+                    }
                     window.location.reload();
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    setLoading(false);
-                    setMessage(resMessage);
                 }
-            );
+            ).catch((error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                setLoading(false);
+                setMessage(resMessage);
+            });
         } else {
             setLoading(false);
         }

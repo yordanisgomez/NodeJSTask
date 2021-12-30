@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router";
+import {useNavigate} from "react-router-dom";
 import AdminService from "../../services/admin.service";
 import React from "react";
 

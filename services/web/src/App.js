@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {Routes, Route, Link, useNavigate} from "react-router-dom";
+import {Routes, Route, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
@@ -56,11 +57,13 @@ const App = () => {
 
                 {currentUser ? (
                     <div className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <Link to={"/profile"} className="nav-link">
-                                {`${currentUser.firstName} ${currentUser.lastName}`}
-                            </Link>
-                        </li>
+                        {!showAdminBoard && (
+                            <li className="nav-item">
+                                <Link to={"/profile"} className="nav-link">
+                                    {`${currentUser.firstName} ${currentUser.lastName}`}
+                                </Link>
+                            </li>
+                        )}
                         <li className="nav-item">
                             <a href="/login" className="nav-link" onClick={logOut}>
                                 LogOut
@@ -86,6 +89,8 @@ const App = () => {
 
             <div className="container mt-3">
                 <Routes>
+                    {/*<Route path="/" element={getHome()}/>*/}
+                    {<Route path="/" element={<Home/>}/>}
                     <Route path="/login" element={<Login/>} />
                     <Route path="/register" element={<Register/>} />
                     <Route path="/profile" element={<Profile/>} />

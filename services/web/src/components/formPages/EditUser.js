@@ -7,7 +7,7 @@ import AdminService from "../../services/admin.service";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-const EditUser = (props) => {
+const EditUser = () => {
     const form = useRef();
     const checkBtn = useRef();
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ const EditUser = (props) => {
         if (checkBtn.current.context._errors.length === 0) {
             AdminService.updateUser(state._id, firstName, lastName).then(
                 () => {
-                    navigate("/profile");
+                    navigate("/admin");
                     window.location.reload();
                 },
                 (error) => {

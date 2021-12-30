@@ -10,18 +10,17 @@ const BoardUser = () => {
         UserService.getUserBoard().then(
             (response) => {
                 setContent(response.data.data);
-            },
-            (error) => {
-                const _content =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+            })
+            .catch((error) => {
+            const _content =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
 
-                setContent(_content);
-            }
-        );
+            setContent(_content);
+        });
     }, []);
 
     return (
@@ -32,7 +31,7 @@ const BoardUser = () => {
                     Array.isArray(content) ? (
                         <AuthorList authorList={content}/>
                     ) : (
-                        content
+                        <p>{content}</p>
                     )
                 }
 

@@ -44,7 +44,7 @@ const BoardAdmin = () => {
                         Array.isArray(content) ? (
                             <UserList userList={content}/>
                         ) : (
-                            content
+                            <p>{content}</p>
                         )
                     }
                 </div>

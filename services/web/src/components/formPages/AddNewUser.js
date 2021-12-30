@@ -27,7 +27,7 @@ const validEmail = (value) => {
     }
 };
 
-const AddNewUser = (props) => {
+const AddNewUser = () => {
     const form = useRef();
     const checkBtn = useRef();
     const navigate = useNavigate();
@@ -65,7 +65,7 @@ const AddNewUser = (props) => {
         if (checkBtn.current.context._errors.length === 0) {
             AdminService.addUser(email, firstName, lastName).then(
                 () => {
-                    navigate("/profile");
+                    navigate("/admin");
                     window.location.reload();
                 },
                 (error) => {

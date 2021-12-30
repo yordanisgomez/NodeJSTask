@@ -10,10 +10,10 @@ const Profile = () => {
 
     useEffect(() => {
         UserService.getUserBooks().then(
-            (response) => {console.log(response)
+            (response) => {
                 setContent(response.data.data);
             },
-            (error) => {console.log(error)
+            (error) => {
                 const _content =
                     (error.response &&
                         error.response.data &&
@@ -41,14 +41,18 @@ const Profile = () => {
                 {currentUser.role &&
                     <li key={0}>{currentUser.role}</li>}
             </ul>
-            <strong>My Books:</strong>
-            {
-                Array.isArray(content) ? (
+            {currentUser.role == "ROLE_USER" && (
+                <>
+                <strong>My Books:</strong>
+                {
+                    Array.isArray(content) ? (
                     <BookList books={content} editMode={true}/>
-                ) : (
-                    content
-                )
-            }
+                    ) : (
+                    <p>{content}</p>
+                    )
+                }
+                </>
+            )}
         </div>
     );
 };
