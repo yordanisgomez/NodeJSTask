@@ -1,0 +1,22 @@
+FROM node
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/lib
+WORKDIR /usr/src/lib
+
+# Install app dependencies
+COPY ./lib/package.json /usr/src/lib/
+RUN npm install --prod
+
+WORKDIR /usr/src/app
+COPY ./server/package.json /usr/src/app/
+RUN npm install --prod
+
+# Bundle app source
+COPY ./server/ /usr/src/app
+COPY ./server/.env /usr/src/app/
+COPY ./lib/ /usr/src/lib
+
+EXPOSE 8000
+CMD [ "npm", "start" ]
