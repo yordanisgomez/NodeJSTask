@@ -19,6 +19,8 @@ services:
     container_name: mongodb
     volumes:
       - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
 
   web:
     container_name: web

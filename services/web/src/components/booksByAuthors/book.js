@@ -83,8 +83,8 @@ const BookList = (props) => {
                     </button>
                 )
             }
-            <div className="listRow">
-                <ul>{bookList}</ul>
+            <div>
+                <ul className="listRow">{bookList}</ul>
             </div>
         </div>
     )
