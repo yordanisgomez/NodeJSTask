@@ -36,11 +36,6 @@ const Profile = () => {
             <p>
                 <strong>Email:</strong> {currentUser.email}
             </p>
-            <strong>Authorities:</strong>
-            <ul>
-                {currentUser.role &&
-                    <li key={0}>{currentUser.role}</li>}
-            </ul>
             {currentUser.role == "ROLE_USER" && (
                 <>
                 <strong>My Books:</strong>
