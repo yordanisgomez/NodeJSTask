@@ -57,7 +57,7 @@ describe('library test suits', () => {
         await User.deleteOne(connection, testDBName, email)
 
         const user = await db.collection(COLLECTIONS.USER).findOne({_id: email})
-        expect(user).toBe(null)
+        expect(user).toBeNull()
     })
 
     it('should update an author from the users collection', async () => {
@@ -126,6 +126,31 @@ describe('library test suits', () => {
         await Library.authorDeleteBook(connection, testDBName, user, insertedId)
 
         const book = await db.collection(COLLECTIONS.BOOK).findOne({_id: insertedId})
-        expect(book).toBe(null)
+        expect(book).toBeNull()
+    })
+
+    it('should reject with an error', async () => {
+        const title = "G3D"
+        const isbn = "isbn-002"
+        const email = "morgan3@university.com"
+        const author = {
+            _id: email,
+            firstName: "Morgan",
+            lastName: "McGuire"
+        }
+        await addNewUser(email, "Morgan", "McGuire")
+        const insertedId = await addNewBook(title, isbn, "editorial", "2000", author)
+
+        // add another user to try to delete the book
+        const secondEmail = "elider@university.com"
+        await addNewUser(secondEmail, "Elider", "Gomez")
+
+        const user = {_id: secondEmail}
+        expect.assertions(1)
+        try {
+            await Library.authorDeleteBook(connection, testDBName, user, insertedId)
+        } catch (e) {
+            expect(e.message).toMatch("The user is not the author of this book")
+        }
     })
 })

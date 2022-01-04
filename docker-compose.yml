@@ -14,6 +14,14 @@ services:
     ports:
     - "8000:8000"
 
+  mongo:
+        image: mongo
+        container_name: mongodb
+        volumes:
+          - mongodb-data:/data/db
+        ports:
+          - "27017:27017"
+
   web:
     container_name: web
     build:
