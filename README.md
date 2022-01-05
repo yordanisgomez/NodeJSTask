@@ -1,5 +1,11 @@
 # NodeJSTask
 
+## Default admin user credentials:
+Note or change the following values at "services/server/.env"
+ADMIN_PASSWORD="adminSecretPassword"
+ADMIN_EMAIL="admin@email.com"
+To log in with a default admin account after installation.
+
 ## Installation
 
 Install [Docker Compose](https://docs.docker.com/compose/install/), then:
